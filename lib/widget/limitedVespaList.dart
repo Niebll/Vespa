@@ -20,8 +20,50 @@ class _LimitedVespaListState extends State<LimitedVespaList> {
     return raw.map((f) => Vespas.fromJson(f)).toList();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+    return Container(
+      color: Color.fromRGBO(241, 241, 241, 5),
+      child: FutureBuilder(
+          future: getAllVespaDatas(context),
+          builder: (context, data) {
+            if (data.hasData) {
+              List<Vespas> vespas = data.data as List<Vespas>;
+              return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: vespas.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {},
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        margin: EdgeInsets.all(10),
+                        width: 160,
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+
+                                  width: MediaQuery.of(context).size.width,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 140,
+                                      // color: Colors.amber,
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            height: 115,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: HexColor(vespas[index].primaryColor!),
+                                            ),
     return FutureBuilder(
         future: getAllVespaDatas(context),
         builder: (context, data) {
@@ -119,3 +161,17 @@ class _LimitedVespaListState extends State<LimitedVespaList> {
         });
   }
 }
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+}
+
+//ini mau merge
