@@ -1,6 +1,8 @@
 import 'dart:async';
-
+import 'package:page_transition/page_transition.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+
 
 import '../Homepage/homepage.dart';
 
@@ -27,14 +29,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return AnimatedSplashScreen(
+        splash: 'assets/images/vespa_logo.jpg',
+        nextScreen: Homepage(),
+      splashTransition: SplashTransition.scaleTransition,
+      pageTransitionType: PageTransitionType.fade,
       backgroundColor: Color.fromRGBO(109, 203, 176, 1),
-      body: Center(
-        child: Container(
-            height: 200,
-            width: 200,
-            child: Image(image: AssetImage("assets/images/vespa_logo.jpg"))),
-      ),
+      animationDuration:Duration(milliseconds: 750),
+      splashIconSize: 300,
+      centered: true,
     );
   }
 }
